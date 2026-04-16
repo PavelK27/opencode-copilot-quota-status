@@ -1,0 +1,37 @@
+{
+  "name": "opencode-copilot-quota-status",
+  "version": "0.1.0",
+  "description": "OpenCode TUI plugin that shows live GitHub Copilot quota usage in the prompt status area.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "opencode",
+    "plugin",
+    "tui",
+    "github-copilot",
+    "quota"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.4.6",
+    "@opentui/solid": ">=0.1.99",
+    "solid-js": ">=1.9.11"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "1.4.6",
+    "@opentui/solid": "0.1.99",
+    "solid-js": "1.9.11",
+    "typescript": "^5.8.3"
+  }
+}
