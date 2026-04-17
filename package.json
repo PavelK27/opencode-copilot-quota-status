@@ -13,7 +13,9 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "opencode",
@@ -31,7 +33,12 @@
   "devDependencies": {
     "@opencode-ai/plugin": "1.4.6",
     "@opentui/solid": "0.1.99",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "jest": "^30.3.0",
     "solid-js": "1.9.11",
-    "typescript": "^5.8.3"
+    "ts-jest": "^29.4.9",
+    "typescript": "^5.8.3",
+    "vitest": "^1.6.1"
   }
 }

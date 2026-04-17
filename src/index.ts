@@ -20,27 +20,27 @@ const COPILOT_HEADERS = {
   "Copilot-Integration-Id": "vscode-chat",
 }
 
-type CopilotQuotaConfig = {
+export type CopilotQuotaConfig = {
   token: string
   username: string
   tier: keyof typeof COPILOT_PLAN_LIMITS
 }
 
-type CopilotAuth = {
+export type CopilotAuth = {
   type?: string
   access?: string
   refresh?: string
   expires?: number
 }
 
-type InternalQuota = {
+export type InternalQuota = {
   entitlement: number
   remaining: number
   percent_remaining: number
   unlimited?: boolean
 }
 
-type InternalUsage = {
+export type InternalUsage = {
   copilot_plan: string
   quota_reset_date: string
   quota_snapshots: {
@@ -48,22 +48,22 @@ type InternalUsage = {
   }
 }
 
-type PublicUsageItem = {
+export type PublicUsageItem = {
   sku: string
   grossQuantity: number
 }
 
-type PublicUsage = {
+export type PublicUsage = {
   user: string
   usageItems: PublicUsageItem[]
 }
 
-type QuotaSnapshot = {
+export type QuotaSnapshot = {
   text: string
   stale: boolean
 }
 
-const COPILOT_PLAN_LIMITS = {
+export const COPILOT_PLAN_LIMITS = {
   free: 50,
   pro: 300,
   "pro+": 1500,
@@ -135,7 +135,7 @@ async function exchangeForCopilotToken(oauthToken: string) {
   }
 }
 
-function buildBearerHeaders(token: string): HeadersInit {
+export function buildBearerHeaders(token: string): HeadersInit {
   return {
     Accept: "application/json",
     Authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ function buildBearerHeaders(token: string): HeadersInit {
   }
 }
 
-function buildLegacyHeaders(token: string): HeadersInit {
+export function buildLegacyHeaders(token: string): HeadersInit {
   return {
     Accept: "application/json",
     Authorization: `token ${token}`,
@@ -197,7 +197,7 @@ async function fetchInternalUsage(authData: CopilotAuth) {
   return (await exchangedResponse.json()) as InternalUsage
 }
 
-function getResetCountdown(resetDate: string) {
+export function getResetCountdown(resetDate: string) {
   const reset = new Date(resetDate)
   const diffMs = reset.getTime() - Date.now()
   if (diffMs <= 0) return "soon"
@@ -209,7 +209,7 @@ function getResetCountdown(resetDate: string) {
   return `${hours}h`
 }
 
-function formatPublicStatus(data: PublicUsage, tier: CopilotQuotaConfig["tier"]) {
+export function formatPublicStatus(data: PublicUsage, tier: CopilotQuotaConfig["tier"]) {
   const limit = COPILOT_PLAN_LIMITS[tier]
   const used = data.usageItems
     .filter((item) => item.sku === "Copilot Premium Request" || item.sku.includes("Premium"))
@@ -218,7 +218,7 @@ function formatPublicStatus(data: PublicUsage, tier: CopilotQuotaConfig["tier"])
   return `Copilot ${usedPercent}% used`
 }
 
-function formatInternalStatus(data: InternalUsage) {
+export function formatInternalStatus(data: InternalUsage) {
   const premium = data.quota_snapshots.premium_interactions
   if (!premium) return `Copilot ${data.copilot_plan}`
   if (premium.unlimited) return `Copilot ${data.copilot_plan} unlimited`
